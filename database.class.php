@@ -3,7 +3,7 @@
  * Hızlı Veritabanı İşlemleri
  * @author Yılmaz Demir
  * @link http://yilmazdemir.com.tr
- * @version 0.1
+ * @version 0.2
  */
 
 class Database extends PDO 
