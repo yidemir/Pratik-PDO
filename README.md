@@ -2,7 +2,9 @@
 PDO ile yazılmış pratik ve kullanımı kolay bir veritabanı sınıfı
 
 ## Kullanımı
-Veritabanındaki tablolarla çalışırken en çok yaptığımız işlemler CRUD (yani veri ekleme, okuma, güncelleme ve silme) işlemleri. Bunu baz alarak yazılan bu sınıf sayesinde veri çekme/okuma, ekleme, silme, düzenleme işlemlerini kolayca yapabiliyoruz. Kendi projelerimde kullanmak için yazdığım bir sınıftır, paylaşmaktan mutluluk duyuyorum.
+Veritabanındaki tablolarla çalışırken en çok yaptığımız işlemler CRUD (yani veri ekleme, okuma, güncelleme ve silme) işlemleridir. Bunu baz alarak yazılan bu sınıf sayesinde veri çekme/okuma, ekleme, silme, düzenleme işlemlerini kolayca yapabiliyoruz. Kendi projelerimde kullanmak için yazdığım bir sınıftır, paylaşmaktan mutluluk duyuyorum.
+
+Veritabanından gelen veri; dizi (array) olarak değil, obje (object) olarak dönmektedir. Örneğin `$post["title"]` yerine `$post->title` olarak kullanmanız gerekiyor. 
 
 ## Bağlantı Kurma ve Ayarlar
 ```php
@@ -18,7 +20,7 @@ echo $post->title;
 ```
 
 ### Tekil Veri Çekme (execOne)
-Bir satı veri çekmek için ya da sorgu çalıştırmak için kullanılır
+Bir satır veri çekmek için ya da sorgu çalıştırmak için kullanılır
 ```php
 $post = Database::execOne("SELECT * FROM post WHERE created = ?", array("2015-04-15 12:24:14"));
 echo $post->title;
