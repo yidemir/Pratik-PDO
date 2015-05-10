@@ -47,7 +47,7 @@ class Database extends PDO
 	 * @param array $parameters Parametreler (array(1) gibi)
 	 * @return object Obje şeklinde döndürür ($post->title gibi)
 	 */
-	public static function getOne($table, $conditions = null, $parameters = [])
+	public static function getOne($table, $conditions = null, $parameters = array())
 	{
 		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
 		self::$query->execute($parameters);
@@ -73,7 +73,7 @@ class Database extends PDO
 	 * @param array $parameters Parametreler 
 	 * @return object Obje şeklinde döndürür ($post->title gibi)
 	 */
-	public static function execOne($query, $parameters = [])
+	public static function execOne($query, $parameters = array())
 	{
 		self::$query = self::$pdo->prepare($query);
 		self::$query->execute($parameters);
@@ -87,7 +87,7 @@ class Database extends PDO
 	 * @param array $parameters Parametreler (array("post") gibi)
 	 * @return object Obje şeklinde döndürür ($post->title gibi)
 	 */
-	public static function getAll($table, $conditions = null, $parameters = [])
+	public static function getAll($table, $conditions = null, $parameters = array())
 	{
 		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
 		self::$query->execute($parameters);
@@ -100,7 +100,7 @@ class Database extends PDO
 	 * @param array $parameters Parametreler 
 	 * @return object Obje şeklinde döndürür ($post->title gibi)
 	 */
-	public static function execAll($query, $parameters = [])
+	public static function execAll($query, $parameters = array())
 	{
 		self::$query = self::$pdo->prepare($query);
 		self::$query->execute($parameters);
@@ -141,7 +141,7 @@ class Database extends PDO
 	 * ve karşılarında veriler olmak üzere
 	 * @return int Güncellenen verinin ID'sini ya da false döndürür
 	 */
-	public static function update($table, $id, $data, $conditions = null, $parameters = [])
+	public static function update($table, $id, $data, $conditions = null, $parameters = array())
 	{
 		if ($id) {
 			$values = array();
@@ -190,7 +190,7 @@ class Database extends PDO
 	 * @param int $id Silinecek verinin ID'si
 	 * @return int Silinen verinin ID'sini ya da false döndürür
 	 */
-	public static function delete($table, $id, $conditions = null, $parameters = [])
+	public static function delete($table, $id, $conditions = null, $parameters = array())
 	{
 		if ($id) {
 			$count = self::count($table, "WHERE " . self::$pk ."=?", array($id));
@@ -220,7 +220,7 @@ class Database extends PDO
 	 * @param array $parameters Parametreler (array("post") gibi)
 	 * @return int Kaç satır veri olduğunu döndürür
 	 */
-	public static function count($table, $conditions = null, $parameters = [])
+	public static function count($table, $conditions = null, $parameters = array())
 	{
 		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
 		self::$query->execute($parameters);
