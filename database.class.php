@@ -227,6 +227,19 @@ class Database extends PDO
 		return self::$query->rowCount();
 	}
 
+	/**
+	 * SQL sorgusuna göre satır sayısını döndürür
+	 * @param string $query SQL Sorgusu
+	 * @param array $parameters Parametreler 
+	 * @return int Kaç satır veri olduğunu döndürür
+	 */
+	public static function execCount($query, $parameters = array())
+	{
+		self::$query = self::$pdo->prepare($query);
+		self::$query->execute($parameters);
+		return self::$query->rowCount();	
+	}
+
 	public function setPrimaryKey($pk)
 	{
 		self::$pk = $pk;
