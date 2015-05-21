@@ -3,13 +3,13 @@
  * Hızlı Veritabanı İşlemleri
  * @author Yılmaz Demir
  * @link http://yilmazdemir.com.tr
- * @version 0.2
+ * @version 0.4
  */
 
 class Database extends PDO 
 {
 	// Tablodaki asıl anahtar (Primary key)
-	private static $pk = "id";
+	private static $pk = 'id';
 	private static $query;
 	private static $pdo;
 
@@ -23,15 +23,15 @@ class Database extends PDO
 	{
 		try {
 			self::$pdo = new PDO(
-				"mysql:host=" . 
+				'mysql:host=' . 
 				$host . 
-				";dbname=" . 
+				';dbname=' . 
 				$name, 
 				$user, 
 				$pass,
 				array(
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET utf8",
+					PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+					PDO::MYSQL_ATTR_INIT_COMMAND => 'SET CHARACTER SET utf8',
 					PDO::ATTR_EMULATE_PREPARES => false
 					)
 				);
@@ -49,7 +49,7 @@ class Database extends PDO
 	 */
 	public static function getOne($table, $conditions = null, $parameters = array())
 	{
-		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
+		self::$query = self::$pdo->prepare('SELECT * FROM ' . $table . ' ' . $conditions);
 		self::$query->execute($parameters);
 		return self::$query->fetch(PDO::FETCH_OBJ);	
 	}
@@ -62,7 +62,7 @@ class Database extends PDO
 	 */
 	public static function getId($table, $id)
 	{
-		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " WHERE " . self::$pk . "=?");
+		self::$query = self::$pdo->prepare('SELECT * FROM ' . $table . ' WHERE ' . self::$pk . '=?');
 		self::$query->execute(array($id));
 		return self::$query->fetch(PDO::FETCH_OBJ);
 	}
@@ -84,12 +84,12 @@ class Database extends PDO
 	 * Tablo adına ve koşullara göre çoklu veri döndürür
 	 * @param string $table Tablo adı
 	 * @param string $conditions Şartlar (type=? gibi)
-	 * @param array $parameters Parametreler (array("post") gibi)
+	 * @param array $parameters Parametreler (array('post') gibi)
 	 * @return object Obje şeklinde döndürür ($post->title gibi)
 	 */
 	public static function getAll($table, $conditions = null, $parameters = array())
 	{
-		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
+		self::$query = self::$pdo->prepare('SELECT * FROM ' . $table . ' ' . $conditions);
 		self::$query->execute($parameters);
 		return self::$query->fetchAll(PDO::FETCH_OBJ);
 	}
@@ -123,10 +123,10 @@ class Database extends PDO
 			$columns[] = $column;
 		}
 
-		$columns = implode(",", $columns);
-		$marks = trim(substr(str_repeat("?,", count($values)), 0, -1));
+		$columns = implode(',', $columns);
+		$marks = trim(substr(str_repeat('?,', count($values)), 0, -1));
 
-		self::$query = self::$pdo->prepare("INSERT INTO " . $table . " (" . $columns . ") VALUES (" . $marks . ")");
+		self::$query = self::$pdo->prepare('INSERT INTO ' . $table . ' (' . $columns . ') VALUES (' . $marks . ')');
 		if (self::$query->execute($values)) {
 			return self::$pdo->lastInsertId();
 		}
@@ -151,11 +151,11 @@ class Database extends PDO
 				$columns[] = $column;
 			}
 
-			$columnsAndMarks = implode("=?,", $columns) . "=?";
+			$columnsAndMarks = implode('=?,', $columns) . '=?';
 
-			$count = self::count($table, "WHERE " . self::$pk ."=?", array($id));
+			$count = self::count($table, 'WHERE ' . self::$pk .'=?', array($id));
 			if ($count) {
-				self::$query = self::$pdo->prepare("UPDATE " . $table . " SET " . $columnsAndMarks ." WHERE " . self::$pk . "=" . $id);
+				self::$query = self::$pdo->prepare('UPDATE ' . $table . ' SET ' . $columnsAndMarks .' WHERE ' . self::$pk . '=' . $id);
 				if (self::$query->execute($values)) {
 					return $id;
 				}
@@ -170,11 +170,11 @@ class Database extends PDO
 				$columns[] = $column;
 			}
 
-			$columnsAndMarks = implode("=?,", $columns) . "=?";
+			$columnsAndMarks = implode('=?,', $columns) . '=?';
 
 			$count = self::count($table, $conditions, $parameters);
 			if ($count) {
-				self::$query = self::$pdo->prepare("UPDATE " . $table . " SET " . $columnsAndMarks . " " .$conditions);
+				self::$query = self::$pdo->prepare('UPDATE ' . $table . ' SET ' . $columnsAndMarks . ' ' .$conditions);
 				if (self::$query->execute(array_merge($values, $parameters))) {
 					return $id;
 				}
@@ -193,9 +193,9 @@ class Database extends PDO
 	public static function delete($table, $id, $conditions = null, $parameters = array())
 	{
 		if ($id) {
-			$count = self::count($table, "WHERE " . self::$pk ."=?", array($id));
+			$count = self::count($table, 'WHERE ' . self::$pk .'=?', array($id));
 			if ($count) {
-				self::$query = self::$pdo->prepare("DELETE FROM " . $table . " WHERE " . self::$pk . "=" . $id);
+				self::$query = self::$pdo->prepare('DELETE FROM ' . $table . ' WHERE ' . self::$pk . '=' . $id);
 				if (self::$query->execute()) {
 					return $id;
 				}
@@ -205,7 +205,7 @@ class Database extends PDO
 		} else {
 			$count = self::count($table, $conditions, $parameters);
 			if ($count) {
-				self::$query = self::$pdo->prepare("DELETE FROM " . $table . " " . $conditions);
+				self::$query = self::$pdo->prepare('DELETE FROM ' . $table . ' ' . $conditions);
 				self::$query->execute($parameters);
 				return true;	
 			}
@@ -217,12 +217,12 @@ class Database extends PDO
 	 * Tablo adına ve koşullara göre satır sayısını döndürür
 	 * @param string $table Tablo adı
 	 * @param string $conditions Şartlar (WHERE type=? gibi)
-	 * @param array $parameters Parametreler (array("post") gibi)
+	 * @param array $parameters Parametreler (array('post') gibi)
 	 * @return int Kaç satır veri olduğunu döndürür
 	 */
 	public static function count($table, $conditions = null, $parameters = array())
 	{
-		self::$query = self::$pdo->prepare("SELECT * FROM " . $table . " " . $conditions);
+		self::$query = self::$pdo->prepare('SELECT * FROM ' . $table . ' ' . $conditions);
 		self::$query->execute($parameters);
 		return self::$query->rowCount();
 	}
