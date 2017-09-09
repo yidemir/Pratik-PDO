@@ -1,7 +1,9 @@
+**Bu ufak paket, küçük ölçekte uygulamalarda kullanılmak üzere amatör bir ruhla yazılmıştır. Özel bir PDO sınıfı yazmak için size bir şeyler katabilir.**
+
 # Pratik-PDO
 PDO ile yazılmış pratik ve kullanımı kolay bir veritabanı sınıfı
 
-## Kullanımı
+## Kullanımı
 Veritabanındaki tablolarla çalışırken en çok yaptığımız işlemler CRUD (yani veri ekleme, okuma, güncelleme ve silme) işlemleridir. Bunu baz alarak yazılan bu sınıf sayesinde veri çekme/okuma, ekleme, silme, düzenleme işlemlerini kolayca yapabiliyoruz. Kendi projelerimde kullanmak için yazdığım bir sınıftır, paylaşmaktan mutluluk duyuyorum.
 
 Veritabanından gelen veri; dizi (array) olarak değil, obje (object) olarak dönmektedir. Örneğin `$post['title']` yerine `$post->title` olarak kullanmanız gerekiyor. 
